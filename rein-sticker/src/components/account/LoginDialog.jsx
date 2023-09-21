@@ -1,7 +1,13 @@
+
+import {useContext} from 'react';
 import {Box,Dialog,Typography,List,ListItem,styled} from '@mui/material';
 import {qrCodeImage} from '../../constants/data.js';
+import { AccountContext } from '../../context/AccountProvider.jsx';
+
+
 import {GoogleLogin } from '@react-oauth/google';
 import jwt_decode from 'jwt-decode';
+
 
 // styling
 
@@ -50,10 +56,11 @@ const StyledList = styled(List)`
 
 const LoginDialog = () => {
 
+  const {setAccount} = useContext(AccountContext);
 
   const onLoginSuccess=(res)=>{
      const decoded=jwt_decode(res.credential)
-     console.log(decoded);
+     setAccount(decoded);
   }   
   
   const onLoginError=(res)=>{
@@ -66,6 +73,7 @@ const LoginDialog = () => {
     <Dialog 
     open={true}  
     PaperProps={{sx:dialogStyle}}
+    hideBackdrop={true}
     >
       <Component>
         <Container>
@@ -85,7 +93,7 @@ const LoginDialog = () => {
                         onError={onLoginError}
                     />
               </Box>
-        </Box>
+        </Box>                       
       </Component>
     </Dialog>
     
