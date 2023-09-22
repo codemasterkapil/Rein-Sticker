@@ -20,11 +20,11 @@ const Component=styled(Box)`
 `
 
 const LeftBox=styled(Box)`
-  width:400px;
+  width:423px;
 `
 const RightBox=styled(Box)`
-  min-width:73%;
-  border:4px solid #FFB6C1
+  min-width:69%;
+  border-left:4px solid lightgrey
 `
 
 const ChatDialog = () => {
