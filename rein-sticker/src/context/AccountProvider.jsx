@@ -14,7 +14,7 @@ const AccountProvider = ({children}) => {
        setAccount,
        person,
        setPerson,
-    }}> 
+    }}>     
       {children}
     </AccountContext.Provider>
     
