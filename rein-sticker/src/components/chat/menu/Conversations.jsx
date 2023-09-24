@@ -11,7 +11,7 @@ const Component=styled(Box)`
 `
 
 
-const Conversations = () => {
+const Conversations = ({text}) => {
 
   const [users,setUsers]=useState([]);
 
@@ -22,13 +22,16 @@ const Conversations = () => {
     const fetchData=async()=>{
        try{
           let response=await getUsers();
-          setUsers(response)
+          const filteredData=response.filter((res)=>{
+            return res.name.toLowerCase().includes(text);
+          })
+          setUsers(filteredData)
        }catch(error){
           console.log('error while fetching the users',error.message);
        }
     } 
     fetchData();
-  },[])
+  },[text])
 
   return (
     <Component>
