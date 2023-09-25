@@ -1,8 +1,9 @@
-import {useState} from 'react'
+import {useState,useEffect} from 'react'
 import EmojiEmotionsOutlinedIcon from '@mui/icons-material/EmojiEmotionsOutlined';
 import AttachFileOutlinedIcon from '@mui/icons-material/AttachFileOutlined';
 import MicOutlinedIcon from '@mui/icons-material/MicOutlined';
 import {Box,styled,InputBase} from '@mui/material'
+import {uploadFile} from '../../../service/api.js';
 
 const Container=styled(Box)`
    height:55px;
@@ -30,14 +31,42 @@ const Attach=styled(AttachFileOutlinedIcon)`
   transform:rotate(40deg);
 `
 
-const Footer = ({sendText,setValue,value}) => {
+const Footer = ({sendText,setValue,value,file,setFile}) => {
 
-  
+
+   useEffect(()=>{
+     const getImage=async()=>{
+       if(file){
+         const data=new FormData();
+         data.append("name",file.name);
+         data.append("file",file);
+         await uploadFile(data);
+       }
+     }
+     getImage();
+     setValue('');
+
+   },[file])
+
+   const onFileChange=(e)=>{
+      setFile(e.target.files[0]);
+      setValue(e.target.files[0].name);
+   }
 
   return (
     <Container>
        <EmojiEmotionsOutlinedIcon />
-       <Attach />
+       <label htmlFor="file-input">
+         <Attach />
+       </label>
+       
+       <input
+          type="file"
+          id="file-input"
+          accept=".pdf"
+          style={{ display: 'none' }}
+          onChange={(e)=>onFileChange(e)}
+      />
        <Search>
           <InputField placeholder='type a message'
             onChange={(e)=>setValue(e.target.value)} 
@@ -45,7 +74,7 @@ const Footer = ({sendText,setValue,value}) => {
             value={value}
           ></InputField>
        </Search>
-       <MicOutlinedIcon />
+       <MicOutlinedIcon />  
     </Container>
   )
 }

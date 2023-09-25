@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from 'react'
+import { useState, useContext, useEffect,useRef } from 'react'
 import { styled, Box } from '@mui/material';
 import Footer from './Footer';
 import { AccountContext } from '../../../context/AccountProvider';
@@ -21,10 +21,23 @@ const Container = styled(Box)`
 
 const Messages = ({ person, conversation }) => {
 
-  const { account } = useContext(AccountContext);
+  const { account,socket } = useContext(AccountContext);
   const [value, setValue] = useState('');
   const [messages, setMessages] = useState([]);
   const [new_message, setNew_Message] = useState(false);
+  const [file,setFile]=useState();
+  const [incomingMessage,setIncomingMessage]=useState({});
+
+  const scrollRef=useRef();
+
+  useEffect(()=>{
+     socket.current.on('getMessage',(data)=>{
+         setIncomingMessage({
+            ...data,
+            createdAt:Date.now(),
+         })
+     })
+  },[])
 
   useEffect(() => {
     const getMessageDetails = async () => {
@@ -34,6 +47,13 @@ const Messages = ({ person, conversation }) => {
     conversation._id && getMessageDetails();
   }, [person.sub, conversation._id, new_message]);
 
+  useEffect(()=>{
+     scrollRef.current?.scrollIntoView({transition:'smooth'})
+  },[messages]) 
+
+  useEffect(()=>{
+    incomingMessage && conversation?.members?.includes(incomingMessage.senderId) && setMessages(prev=>[...prev,incomingMessage])
+  },[incomingMessage,conversation]);
 
   const sendText = async (e) => {
 
@@ -45,12 +65,14 @@ const Messages = ({ person, conversation }) => {
         type: "text",
         text: value,
       }
+      
+      socket.current.emit('sendMessage',message);
 
       await newMessage(message);
       setValue('');
       setNew_Message(!new_message);
     }
-
+    
   }
 
   return (
@@ -59,14 +81,14 @@ const Messages = ({ person, conversation }) => {
         {
           messages.map((message) => {
             return (
-              <Container>
+              <Container ref={scrollRef}>
                 <SingleMessage message={message}></SingleMessage>
               </Container>
             )
           })
         }
       </Component>
-      <Footer sendText={sendText} setValue={setValue} value={value}></Footer>
+      <Footer sendText={sendText} setValue={setValue} value={value} setFile={setFile} file={file}></Footer>
     </Wrapper>
   )
 }
