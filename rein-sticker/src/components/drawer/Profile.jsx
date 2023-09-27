@@ -41,7 +41,7 @@ const DescriptionContainer=styled(Box)`
 const Profile = () => {
 
     const {account} =useContext(AccountContext)
-    console.log(account)
+    
   return (
     <>
       <ImageContainer>

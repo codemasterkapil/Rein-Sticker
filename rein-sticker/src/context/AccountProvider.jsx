@@ -10,6 +10,7 @@ const AccountProvider = ({children}) => {
  const [account,setAccount]=useState();
  const [person,setPerson]=useState({});
  const [activeUsers,setActiveUsers]=useState([]);
+ const [stickers,setStickers]=useState([]);
 
 const socket=useRef(); 
 
@@ -25,7 +26,9 @@ useEffect(()=>{
        setPerson,
        socket,
        activeUsers,
-       setActiveUsers
+       setActiveUsers,
+       stickers,
+       setStickers
     }}>     
       {children}
     </AccountContext.Provider>
