@@ -5,6 +5,6 @@ export const qrCodeImage = 'https://www.ginifab.com/feeds/qr_code/img/qrcode.jpg
 export const emptyProfilePicture = 'https://www.kindpng.com/picc/m/78-785827_user-profile-avatar-login-account-male-user-icon.png';
 //export const background_stickers='https://img.freepik.com/free-vector/great-job-good-job-sticker-collection_52683-61137.jpg?size=626&ext=jpg'
 
-export const background_stickers='https://cdn11.bigcommerce.com/s-78ffrnjzwa/images/stencil/original/products/2968952/3922324/51DJ7oZXrbL__91275.1669279144.jpg'
+export const background_stickers='https://img.freepik.com/free-vector/sticker-icons-hand-drawn-doodle_179234-169.jpg'
 export const background_chat='https://wallpaperaccess.com/full/2478733.jpg';
 //export const background_chat='https://i.pinimg.com/564x/fe/41/48/fe41486f310e4847d8b2e6b2f2ff7502.jpg';

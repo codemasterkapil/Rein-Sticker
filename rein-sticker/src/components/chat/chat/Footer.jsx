@@ -1,9 +1,11 @@
-import {useState,useEffect} from 'react'
+import {useState,useEffect,useContext} from 'react'
 import EmojiEmotionsOutlinedIcon from '@mui/icons-material/EmojiEmotionsOutlined';
 import AttachFileOutlinedIcon from '@mui/icons-material/AttachFileOutlined';
 import MicOutlinedIcon from '@mui/icons-material/MicOutlined';
 import {Box,styled,InputBase} from '@mui/material'
-import {uploadFile} from '../../../service/api.js';
+import {uploadFile,recommendStickers} from '../../../service/api.js';
+import RecommendIcon from '@mui/icons-material/Recommend';
+import { AccountContext } from '../../../context/AccountProvider.jsx';
 
 const Container=styled(Box)`
    height:55px;
@@ -33,6 +35,8 @@ const Attach=styled(AttachFileOutlinedIcon)`
 
 const Footer = ({sendText,setValue,value,file,setFile}) => {
 
+  
+  const {stickers,setStickers}=useContext(AccountContext);
 
    useEffect(()=>{
      const getImage=async()=>{
@@ -51,6 +55,14 @@ const Footer = ({sendText,setValue,value,file,setFile}) => {
    const onFileChange=(e)=>{
       setFile(e.target.files[0]);
       setValue(e.target.files[0].name);
+   }
+
+   const getStickers=async()=>{
+      const message = {
+        text:value
+      };
+      const response=await recommendStickers(message);
+      setStickers(response.data);
    }
 
   return (
@@ -74,6 +86,9 @@ const Footer = ({sendText,setValue,value,file,setFile}) => {
             value={value}
           ></InputField>
        </Search>
+       <RecommendIcon 
+        onClick={()=>getStickers()}
+       />
        <MicOutlinedIcon />  
     </Container>
   )

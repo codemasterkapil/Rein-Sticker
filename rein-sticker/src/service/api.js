@@ -63,3 +63,11 @@ export const uploadFile=async(data)=>{
    }
 }
 
+export const recommendStickers=async(data)=>{
+   try{
+       return await axios.post(url+`message/gettags`,data);
+   }catch(error){
+      console.log('error while calling uploadFile api',error.message);
+   }
+}
+

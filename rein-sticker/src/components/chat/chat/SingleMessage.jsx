@@ -37,7 +37,6 @@ const Time = styled(Typography)`
 const SingleMessage = ({ message }) => {
 
     const { account } = useContext(AccountContext);
-    console.log("hi",account,message);
     return (
         <>
             {message.senderId === account.sub ?
