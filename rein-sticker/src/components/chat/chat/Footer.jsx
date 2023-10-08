@@ -6,7 +6,9 @@ import {Box,styled,InputBase} from '@mui/material'
 import {uploadFile,recommendStickers} from '../../../service/api.js';
 import RecommendIcon from '@mui/icons-material/Recommend';
 import { AccountContext } from '../../../context/AccountProvider.jsx';
+import { UploadStickers} from '../../../service/api.js';
 
+import {sticker_data} from '../../../constants/data.js';
 const Container=styled(Box)`
    height:55px;
    background:#ededed;
@@ -33,7 +35,7 @@ const Attach=styled(AttachFileOutlinedIcon)`
   transform:rotate(40deg);
 `
 
-const Footer = ({sendText,setValue,value,file,setFile}) => {
+const Footer = ({sendText,setValue,value,file,setFile,setReady}) => {
 
   
   const {stickers,setStickers}=useContext(AccountContext);
@@ -58,6 +60,8 @@ const Footer = ({sendText,setValue,value,file,setFile}) => {
    }
 
    const getStickers=async()=>{
+    // await UploadStickers(sticker_data)
+      setReady(true);
       const message = {
         text:value
       };

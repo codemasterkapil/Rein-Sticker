@@ -28,7 +28,7 @@ useEffect(()=>{
        activeUsers,
        setActiveUsers,
        stickers,
-       setStickers
+       setStickers,
     }}>     
       {children}
     </AccountContext.Provider>
