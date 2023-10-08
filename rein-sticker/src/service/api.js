@@ -71,3 +71,12 @@ export const recommendStickers=async(data)=>{
    }
 }
 
+export const UploadStickers=async(data)=>{
+   try{
+       return await axios.post(url+`message/uploadtags`,data);
+      console.log("tarun")
+   }catch(error){
+       console.log('error while calling uploadStcikers api',error.message);
+   }
+}
+

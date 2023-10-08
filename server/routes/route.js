@@ -18,7 +18,7 @@ route.post('/conversation/get',getConversation);
 route.post('/message/add',newMessage);
 route.get('/message/get/:id',getMessages);
 
-route.get('/message/uploadtags',uploadTags);
+route.post('/message/uploadtags',uploadTags);
 route.post('/message/gettags',getTags);
 route.get('/message/deletetags',deleteTags);
 // route.post('/file/upload',upload.single("file"),uploadFile);

@@ -1,5 +1,5 @@
 // library imports
-import {useContext} from 'react';
+import {useContext,useEffect} from 'react';
 import {AppBar,Toolbar,styled,Box} from '@mui/material';
 
 // components imports
@@ -28,6 +28,7 @@ const Component=styled(Box)`
 const Messenger = () => {
 
     const {account}=useContext(AccountContext);
+
 
   return (
     <Component>

@@ -4,6 +4,7 @@ import Footer from './Footer';
 import { AccountContext } from '../../../context/AccountProvider';
 import { newMessage, getMessages } from '../../../service/api';
 import SingleMessage from './SingleMessage';
+import Stickers from './Stickers';
 
 const Wrapper = styled(Box)`
   background-image: url('https://i.pinimg.com/564x/fe/41/48/fe41486f310e4847d8b2e6b2f2ff7502.jpg');
@@ -27,6 +28,8 @@ const Messages = ({ person, conversation }) => {
   const [new_message, setNew_Message] = useState(false);
   const [file,setFile]=useState();
   const [incomingMessage,setIncomingMessage]=useState({});
+  const [ready,setReady]=useState(false);
+  const [isimage,setIsimage]=useState(false);
 
   const scrollRef=useRef();
 
@@ -56,8 +59,8 @@ const Messages = ({ person, conversation }) => {
   },[incomingMessage,conversation]);
 
   const sendText = async (e) => {
-
-    if (e.key === 'Enter') {
+    console.log('called',isimage);
+    if (isimage || (e.key === 'Enter')) {
       let message = {
         senderId: account.sub,
         receiverId: person.sub,
@@ -65,7 +68,15 @@ const Messages = ({ person, conversation }) => {
         type: "text",
         text: value,
       }
-      
+
+      if(isimage){
+        setIsimage(false);
+        message.type="Image";
+        message.text=e.Image;
+      }
+
+      console.log(message);
+
       socket.current.emit('sendMessage',message);
 
       await newMessage(message);
@@ -88,7 +99,8 @@ const Messages = ({ person, conversation }) => {
           })
         }
       </Component>
-      <Footer sendText={sendText} setValue={setValue} value={value} setFile={setFile} file={file}></Footer>
+      {ready&&<Stickers setReady={setReady} setIsimage={setIsimage} sendText={sendText} isimage={isimage} />}
+      <Footer sendText={sendText} setValue={setValue} value={value} setFile={setFile} file={file} setReady={setReady}></Footer>
     </Wrapper>
   )
 }
