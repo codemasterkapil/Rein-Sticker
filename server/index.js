@@ -9,7 +9,7 @@ const app=express();
 //middlewares
 
 app.use(cors());
-app.use(bodyParser.json({extended:true}));
+app.use(bodyParser.json({extended:true,limit: '50mb' }));
 app.use(bodyParser.urlencoded({ extended:true}));
 app.use('/',Route);
 
