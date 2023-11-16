@@ -1,0 +1,18 @@
+
+.sentimental-container{
+    display:flex;
+    flex-direction:column;
+    align-items: center;
+}
+
+.sentimental-container-heading{
+    font-size: 3rem;
+    padding:0px;
+    margin:0;
+}
+
+.sentimental-container-p{
+    background-color: aqua;
+    padding:20px;
+    border-radius: 10px;
+}

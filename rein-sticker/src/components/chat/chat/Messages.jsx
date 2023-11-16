@@ -59,7 +59,7 @@ const Messages = ({ person, conversation }) => {
   },[incomingMessage,conversation]);
 
   const sendText = async (e) => {
-    console.log('called',isimage);
+
     if (isimage || (e.key === 'Enter')) {
       let message = {
         senderId: account.sub,
@@ -74,8 +74,6 @@ const Messages = ({ person, conversation }) => {
         message.type="Image";
         message.text=e.Image;
       }
-
-      console.log(message);
 
       socket.current.emit('sendMessage',message);
 

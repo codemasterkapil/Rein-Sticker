@@ -39,22 +39,42 @@ const Time = styled(Typography)`
 const SingleMessage = ({ message }) => {
 
     const { account } = useContext(AccountContext);
-    // console.log(message);
+
     return (
         <>
             {message.senderId === account.sub ?
                 <Own>
-                    {
-                        message.type==="Image"?<div><img className='sticky-image' src={message.text} alt="msgimg" /></div>:<Text>{message.text}</Text>
-                    }
+                {message.type === "Image" ? (
+                  message.text && (
+                    message.text.startsWith('http') ? (
+                      <div><img className='sticky-image' src={message.text} alt="msgimg" /></div>
+                    ) : (
+                      <img src={`data:image/png;base64,${message.text}`} alt="Base64" className='sticky-image' />
+                    )
+                  )
+                ) : (
+                  <>
+                    <Text>{message.text}</Text>
                     <Time>{formatDate(message.createdAt)}</Time>
-                </Own>
+                  </>
+                )}
+              </Own>
                 :
                 <Wrapper>
-                    {
-                        message.type==="Image"?<div><img className='sticky-image' src={message.text} alt="msgimg" /></div>:<Text>{message.text}</Text>
-                    }
+                    {message.type === "Image" ? (
+                  message.text && (
+                    message.text.startsWith('http') ? (
+                      <div><img className='sticky-image' src={message.text} alt="msgimg" /></div>
+                    ) : (
+                      <img src={`data:image/png;base64,${message.text}`} alt="Base64" className='sticky-image' />
+                    )
+                  )
+                ) : (
+                  <>
+                    <Text>{message.text}</Text>
                     <Time>{formatDate(message.createdAt)}</Time>
+                  </>
+                )}
                 </Wrapper>
             }
         </>
